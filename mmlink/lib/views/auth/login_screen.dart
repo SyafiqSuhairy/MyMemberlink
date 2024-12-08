@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[50], //Light green background
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -36,27 +37,45 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/images/login.png'),
-                TextField(
-                    controller: emailcontroller,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        hintText: "Your Email")),
-                const SizedBox(
-                  height: 10,
+                Image.asset('assets/images/login.png',
+                  height: 150,
+                  width: 150,
                 ),
+                const SizedBox(height: 10), // Spacing
+                const Text(
+                  "Welcome Back! Please login to continue.", // New text
+                  style: TextStyle(
+                    fontSize: 16,                // Adjust the size as needed
+                    fontWeight: FontWeight.bold, // Bold text
+                    color: Colors.black54,       // Subtle color for the text
+                  ),
+                  textAlign: TextAlign.center,   // Center the text
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: emailcontroller,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.email, color: Colors.green),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    hintText: "Your Email",
+                  ),
+                ),
+                const SizedBox(height: 10),
                 TextField(
                   obscureText: true,
                   controller: passwordcontroller,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      hintText: "Your Password"),
+                    prefixIcon: Icon(Icons.lock, color: Colors.green),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    hintText: "Your Password",
+                  ),
                 ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     const Text("Remember me"),
@@ -71,11 +90,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               storeSharedPrefs(value, email, pass);
                             } else {
                               rememberme = false;
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("Please enter your credentials"),
-                                backgroundColor: Colors.red,
-                              ));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Please enter your credentials"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
                               return;
                             }
                           } else {
@@ -84,37 +104,42 @@ class _LoginScreenState extends State<LoginScreen> {
                             storeSharedPrefs(value, email, pass);
                           }
                           rememberme = value;
-                          setState(() {});
                         });
                       },
                     ),
                   ],
                 ),
                 MaterialButton(
-                    elevation: 10,
-                    onPressed: onLogin,
-                    minWidth: 400,
-                    height: 50,
-                    color: Colors.blue[800],
-                    child: const Text("Login",
-                        style: TextStyle(color: Colors.white))),
-                const SizedBox(
-                  height: 20,
+                  elevation: 10,
+                  onPressed: onLogin,
+                  minWidth: 400,
+                  height: 50,
+                  color: Colors.green,
+                  child: const Text(
+                    "Login",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                GestureDetector(
-                  child: const Text("Forgot Password?"),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (content) => const RegisterScreen()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (content) => const RegisterScreen(),
+                      ),
+                    );
                   },
-                  child: const Text("Create new account?"),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.green),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal:20),
+                    child: const Text("Create new account?",
+                      style: TextStyle(color: Colors.green),
+                    ),
+                  ),
                 ),
               ],
             ),

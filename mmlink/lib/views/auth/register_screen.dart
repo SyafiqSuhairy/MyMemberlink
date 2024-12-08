@@ -14,10 +14,13 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+  String passwordStrength = "---"; // Initial password strength
+  Color strengthColor = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[50], // Light green background
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -25,46 +28,89 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/images/login.png'),
-                TextField(
-                    controller: emailcontroller,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        hintText: "Your Email")),
-                const SizedBox(
-                  height: 10,
+                Image.asset('assets/images/register.png',
+                  height: 150,
+                  width: 150,
                 ),
+                const SizedBox(height: 10), // Spacing
+                const Text(
+                  "Join us! Create an account to get started.", // New text
+                  style: TextStyle(
+                    fontSize: 16,                // Adjust the size as needed
+                    fontWeight: FontWeight.bold, // Bold text
+                    color: Colors.black54,       // Subtle color for the text
+                  ),
+                  textAlign: TextAlign.center,   // Center the text
+                ),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: emailcontroller,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.email, color: Colors.green),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    hintText: "Your Email",
+                  ),
+                ),
+                const SizedBox(height: 10),
                 TextField(
                   obscureText: true,
                   controller: passwordcontroller,
+                  onChanged: (value) {
+                    checkPasswordStrength(value);
+                  },
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                    prefixIcon: Icon(Icons.lock, color: Colors.green),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
                       ),
-                      hintText: "Your Password"),
+                    ),
+                    hintText: "Your Password",
+                  ),
                 ),
-                const SizedBox(
-                  height: 20,
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text("Password Strength: "),
+                    Text(
+                      passwordStrength,
+                      style: TextStyle(
+                          color: strengthColor, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 20),
                 MaterialButton(
-                    elevation: 10,
-                    onPressed: onRegisterDialog,
-                    minWidth: 400,
-                    height: 50,
-                    color: Colors.blue[800],
-                    child: const Text("Register",
-                        style: TextStyle(color: Colors.white))),
-                const SizedBox(
-                  height: 20,
+                  elevation: 10,
+                  onPressed: onRegisterDialog,
+                  minWidth: 400,
+                  height: 50,
+                  color: Colors.green,
+                  child: const Text(
+                    "Register",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: const Text("Already registered? Login"),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.green),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: const Text(
+                    "Already registered? Login",
+                    style: TextStyle(color: Colors.green),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -97,8 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           content: const Text("Are you sure?", style: TextStyle()),
           actions: <Widget>[
             TextButton(
-              onPressed:  
-                userRegistration,
+              onPressed: userRegistration,
               child: const Text(
                 "Yes",
                 style: TextStyle(),
@@ -123,13 +168,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  void checkPasswordStrength(String password) {
+    setState(() {
+      if (password.length <= 3) {
+        passwordStrength = "Weak";
+        strengthColor = Colors.red;
+      } else if (password.length > 3 && password.length <= 6) {
+        passwordStrength = "Moderate";
+        strengthColor = Colors.orange;
+      } else {
+        passwordStrength = "Strong";
+        strengthColor = Colors.green;
+      }
+    });
+  }
+
   void userRegistration() {
     String email = emailcontroller.text;
     String pass = passwordcontroller.text;
     http.post(
         Uri.parse("${MyConfig.servername}/memberlink/api/register_user.php"),
         body: {"email": email, "password": pass}).then((response) {
-          print(response);
+      print(response);
       // print(response.statusCode);
       // print(response.body);
       if (response.statusCode == 200) {
@@ -143,17 +203,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Navigator.of(context).pop();
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (content) => const MainScreen()));
-        }
-        else {
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text("Registration Failed"),
             backgroundColor: Colors.red,
           ));
         }
-      }
-      else {
-        
-      }
+      } else {}
     });
   }
 }
