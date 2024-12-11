@@ -1,0 +1,20 @@
+2024/12/09-20:23:20.506 4404 Reusing MANIFEST C:\Users\ACER\AppData\Local\Temp\flutter_tools.195c1195\flutter_tools_chrome_device.d9c498a8\Default\shared_proto_db/MANIFEST-000001
+2024/12/09-20:23:20.506 4404 Recovering log #16
+2024/12/09-20:23:20.513 4404 Reusing old log C:\Users\ACER\AppData\Local\Temp\flutter_tools.195c1195\flutter_tools_chrome_device.d9c498a8\Default\shared_proto_db/000016.log 
+2024/12/09-20:23:20.514 4404 Delete type=0 #3
+2024/12/09-20:23:20.517 4404 Delete type=0 #4
+2024/12/09-20:23:20.518 4404 Delete type=0 #7
+2024/12/09-20:23:20.518 4404 Delete type=0 #10
+2024/12/09-20:23:20.518 4404 Delete type=0 #13
+2024/12/09-20:26:25.552 1e08 Level-0 table #20: started
+2024/12/09-20:26:25.557 1e08 Level-0 table #20: 137221 bytes OK
+2024/12/09-20:26:25.559 1e08 Delete type=0 #16
+2024/12/09-20:26:25.559 1e08 Compacting 4@0 + 1@1 files
+2024/12/09-20:26:25.570 1e08 Generated table #21@0: 774 keys, 130822 bytes
+2024/12/09-20:26:25.570 1e08 Compacted 4@0 + 1@1 files => 130822 bytes
+2024/12/09-20:26:25.571 1e08 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/12/09-20:26:25.571 1e08 Delete type=2 #8
+2024/12/09-20:26:25.571 1e08 Delete type=2 #11
+2024/12/09-20:26:25.571 1e08 Delete type=2 #14
+2024/12/09-20:26:25.571 1e08 Delete type=2 #17
+2024/12/09-20:26:25.571 1e08 Delete type=2 #20
