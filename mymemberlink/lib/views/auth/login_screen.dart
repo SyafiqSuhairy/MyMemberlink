@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.red,
         duration: Duration(seconds: 1),
       ));
-    }
+    } 
   }
 
   Future<void> loadPref() async {
